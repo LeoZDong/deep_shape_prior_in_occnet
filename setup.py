@@ -22,7 +22,6 @@ pykdtree = Extension(
     language='c',
     extra_compile_args=['-std=c99', '-O3', '-fopenmp'],
     extra_link_args=['-lgomp'],
-    include_dirs=[numpy_include_dir]
 )
 
 # mcubes (marching cubes algorithm)
@@ -69,8 +68,7 @@ voxelize_module = Extension(
     sources=[
         'im2mesh/utils/libvoxelize/voxelize.pyx'
     ],
-    libraries=['m'],  # Unix-like specific
-    include_dirs=[numpy_include_dir]
+    libraries=['m']  # Unix-like specific
 )
 
 # DMC extensions
