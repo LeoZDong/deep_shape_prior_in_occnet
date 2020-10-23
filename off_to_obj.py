@@ -1,7 +1,8 @@
 import pymesh
 import os
 
-path = "/viscam/u/leozdong/occnet/demo/generation/viz/"
+path = "/viscam/u/leozdong/occnet/demo/generation/vis"
+
 
 input_name = "00_mesh.off"
 input_file = os.path.join(path, input_name)

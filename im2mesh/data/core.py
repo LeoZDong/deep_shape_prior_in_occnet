@@ -69,8 +69,8 @@ class Shapes3dDataset(data.Dataset):
         else:
             self.metadata = {
                 c: {'id': c, 'name': 'n/a'} for c in categories
-            } 
-        
+            }
+
         # Set index
         for c_idx, c in enumerate(categories):
             self.metadata[c]['idx'] = c_idx
@@ -85,7 +85,7 @@ class Shapes3dDataset(data.Dataset):
             split_file = os.path.join(subpath, split + '.lst')
             with open(split_file, 'r') as f:
                 models_c = f.read().split('\n')
-            
+
             self.models += [
                 {'category': c, 'model': m}
                 for m in models_c
@@ -109,6 +109,7 @@ class Shapes3dDataset(data.Dataset):
         model_path = os.path.join(self.dataset_folder, category, model)
         data = {}
 
+        import ipdb; ipdb.set_trace()
         for field_name, field in self.fields.items():
             try:
                 field_data = field.load(model_path, idx, c_idx)
