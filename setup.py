@@ -43,6 +43,7 @@ triangle_hash_module = Extension(
     sources=[
         'im2mesh/utils/libmesh/triangle_hash.pyx'
     ],
+    include_dirs=[numpy_include_dir],
     libraries=['m']  # Unix-like specific
 )
 
