@@ -68,7 +68,6 @@ voxelize_module = Extension(
     sources=[
         'im2mesh/utils/libvoxelize/voxelize.pyx'
     ],
-    include_dirs=[numpy_include_dir],
     libraries=['m']  # Unix-like specific
 )
 
