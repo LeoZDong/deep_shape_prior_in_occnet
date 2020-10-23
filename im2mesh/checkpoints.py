@@ -75,7 +75,7 @@ class CheckpointIO(object):
         '''
         print(url)
         print('=> Loading checkpoint from url...')
-        state_dict = model_zoo.load_url(url, progress=True)
+        state_dict = model_zoo.load_url(url, progress=True, map_location='cpu')
         scalars = self.parse_state_dict(state_dict)
         return scalars
 

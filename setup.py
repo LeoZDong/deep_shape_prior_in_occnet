@@ -72,24 +72,24 @@ voxelize_module = Extension(
 )
 
 # DMC extensions
-dmc_pred2mesh_module = CppExtension(
-    'im2mesh.dmc.ops.cpp_modules.pred2mesh',
-    sources=[
-        'im2mesh/dmc/ops/cpp_modules/pred_to_mesh_.cpp',
-    ]   
-)
+#dmc_pred2mesh_module = CppExtension(
+#    'im2mesh.dmc.ops.cpp_modules.pred2mesh',
+#    sources=[
+#        'im2mesh/dmc/ops/cpp_modules/pred_to_mesh_.cpp',
+#    ]   
+#)
 
-dmc_cuda_module = CUDAExtension(
-    'im2mesh.dmc.ops._cuda_ext', 
-    sources=[
-        'im2mesh/dmc/ops/src/extension.cpp',
-        'im2mesh/dmc/ops/src/curvature_constraint_kernel.cu',
-        'im2mesh/dmc/ops/src/grid_pooling_kernel.cu',
-        'im2mesh/dmc/ops/src/occupancy_to_topology_kernel.cu',
-        'im2mesh/dmc/ops/src/occupancy_connectivity_kernel.cu',
-        'im2mesh/dmc/ops/src/point_triangle_distance_kernel.cu',
-    ]
-)
+#dmc_cuda_module = CUDAExtension(
+#    'im2mesh.dmc.ops._cuda_ext', 
+#    sources=[
+#        'im2mesh/dmc/ops/src/extension.cpp',
+#        'im2mesh/dmc/ops/src/curvature_constraint_kernel.cu',
+#        'im2mesh/dmc/ops/src/grid_pooling_kernel.cu',
+#        'im2mesh/dmc/ops/src/occupancy_to_topology_kernel.cu',
+#        'im2mesh/dmc/ops/src/occupancy_connectivity_kernel.cu',
+#        'im2mesh/dmc/ops/src/point_triangle_distance_kernel.cu',
+#    ]
+#)
 
 # Gather all extension modules
 ext_modules = [
@@ -99,8 +99,8 @@ ext_modules = [
     mise_module,
     simplify_mesh_module,
     voxelize_module,
-    dmc_pred2mesh_module,
-    dmc_cuda_module,
+#   dmc_pred2mesh_module,
+#   dmc_cuda_module,
 ]
 
 setup(
