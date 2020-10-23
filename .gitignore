@@ -15,4 +15,4 @@ build
 /im2mesh/utils/libsimplify/simplify_mesh.cpp
 /im2mesh/utils/libsimplify/build
 .idea/*
-
+pwd
