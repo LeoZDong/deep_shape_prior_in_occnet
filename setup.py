@@ -68,6 +68,7 @@ voxelize_module = Extension(
     sources=[
         'im2mesh/utils/libvoxelize/voxelize.pyx'
     ],
+    include_dirs=[numpy_include_dir],
     libraries=['m']  # Unix-like specific
 )
 
@@ -76,11 +77,11 @@ dmc_pred2mesh_module = CppExtension(
     'im2mesh.dmc.ops.cpp_modules.pred2mesh',
     sources=[
         'im2mesh/dmc/ops/cpp_modules/pred_to_mesh_.cpp',
-    ]   
+    ]
 )
 
 dmc_cuda_module = CUDAExtension(
-    'im2mesh.dmc.ops._cuda_ext', 
+    'im2mesh.dmc.ops._cuda_ext',
     sources=[
         'im2mesh/dmc/ops/src/extension.cpp',
         'im2mesh/dmc/ops/src/curvature_constraint_kernel.cu',
