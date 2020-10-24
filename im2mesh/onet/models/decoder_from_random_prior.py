@@ -49,7 +49,7 @@ class DecoderOnlyModule(nn.Module):
         Returns:
             The output
         """
-        print("Shape", input.shape)
+        # print("Shape", input.shape)
         return self.decoder(input, self.init_z)
 
 

@@ -33,11 +33,12 @@ print('Total number of parameters: %d' % nparameters)
 
 voxel_field = VoxelsField("model.binvox")
 # TODO: figure out what the 0, 0 means; make this cleaner
-voxel_data = voxel_field.load('./data/ShapeNet/02958343/7c13a71834d2b97687cc3b689b9b258d/', 0, 0)
+voxel_data = torch.FloatTensor(voxel_field.load('./data/ShapeNet/02958343/7c13a71834d2b97687cc3b689b9b258d/', 0, 0))
+print(voxel_data.shape)
 
 it = 0
 
-print_every = 1000
+print_every = 1
 while True:
     it += 1
     loss = trainer.train_step(voxel_data, n_points=10000)
