@@ -22,6 +22,7 @@ pykdtree = Extension(
     language='c',
     extra_compile_args=['-std=c99', '-O3', '-fopenmp'],
     extra_link_args=['-lgomp'],
+    include_dirs=[numpy_include_dir]
 )
 
 # mcubes (marching cubes algorithm)
@@ -43,8 +44,8 @@ triangle_hash_module = Extension(
     sources=[
         'im2mesh/utils/libmesh/triangle_hash.pyx'
     ],
-    include_dirs=[numpy_include_dir],
-    libraries=['m']  # Unix-like specific
+    libraries=['m'],  # Unix-like specific
+    include_dirs=[numpy_include_dir]
 )
 
 # mise (efficient mesh extraction)
@@ -53,6 +54,7 @@ mise_module = Extension(
     sources=[
         'im2mesh/utils/libmise/mise.pyx'
     ],
+    include_dirs=[numpy_include_dir]
 )
 
 # simplify (efficient mesh simplification)
@@ -106,7 +108,7 @@ ext_modules = [
 ]
 
 setup(
-    ext_modules=cythonize(ext_modules),
+    ext_modules=cythonize(ext_modules, compiler_directives={'language_level': '3'}),
     cmdclass={
         'build_ext': BuildExtension
     }
