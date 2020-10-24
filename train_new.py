@@ -4,6 +4,7 @@ import argparse
 from im2mesh.onet.models import decoder
 from im2mesh.onet.models.decoder_from_random_prior import DecoderOnlyTrainer, DecoderOnlyModule
 from im2mesh.data import VoxelsField
+from matplotlib import pyplot as plt
 
 # Arguments
 parser = argparse.ArgumentParser(
@@ -38,14 +39,28 @@ print(voxel_data.shape)
 
 it = 0
 
-print_every = 1
-while True:
-    it += 1
-    loss = trainer.train_step(voxel_data, n_points=10000)
+print_every = 10
+loss_iterations = []
+loss_plot = []
 
-    # Print output
-    if print_every > 0 and (it % print_every) == 0:
-        print('it=%03d loss=%.4f'
-              % (it, loss))
+try:
+    while True:
+        it += 1
+        loss = trainer.train_step(voxel_data, n_points=10000)
+
+        # Print output
+        if print_every > 0 and (it % print_every) == 0:
+            print('it=%03d loss=%.4f'
+                  % (it, loss.item()))
+            loss_iterations.append(it)
+            loss_plot.append(loss.item())
+
+except KeyboardInterrupt:
+    print("Keyboard inpterrupt!")
+    plt.plot(loss_iterations, loss_plot)
+    plt.xlabel('Number of iterations')
+    plt.ylabel('Training Loss')
+    plt.show()
+
 
 

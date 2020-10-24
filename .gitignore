@@ -16,4 +16,5 @@ build
 /im2mesh/utils/libsimplify/build
 .idea/*
 pwd
+loss_plot.png
 
