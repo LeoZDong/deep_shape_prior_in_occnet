@@ -50,18 +50,17 @@ class Decoder(nn.Module):
             self.actvn = lambda x: F.leaky_relu(x, 0.2)
 
     def forward(self, p, z, c=None, **kwargs):
-        batch_size, T, D = p.size()
-
         net = self.fc_p(p)
 
         if self.z_dim != 0:
-            net_z = self.fc_z(z).unsqueeze(1)
+            net_z = self.fc_z(z) #.unsqueeze(1)
             net = net + net_z
 
         if self.c_dim != 0:
             net_c = self.fc_c(c).unsqueeze(1)
             net = net + net_c
 
+        # print("net.shape", net.shape)
         net = self.block0(net)
         net = self.block1(net)
         net = self.block2(net)
@@ -69,6 +68,7 @@ class Decoder(nn.Module):
         net = self.block4(net)
 
         out = self.fc_out(self.actvn(net))
+        # print("out.shape", out.shape)
         out = out.squeeze(-1)
 
         return out
@@ -286,8 +286,6 @@ class DecoderBatchNorm(nn.Module):
             self.actvn = lambda x: F.leaky_relu(x, 0.2)
 
     def forward(self, p, z, c, **kwargs):
-        p = p.transpose(1, 2)
-        batch_size, D, T = p.size()
         net = self.fc_p(p)
 
         if self.z_dim != 0:
