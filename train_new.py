@@ -3,7 +3,7 @@ from torch import optim
 import argparse
 from im2mesh.onet.models import decoder
 from im2mesh.onet.models.decoder_from_random_prior import DecoderOnlyTrainer, DecoderOnlyModule
-from im2mesh.data import VoxelsField, PointsField
+from im2mesh.data import VoxelsField, PointsField, PointCloudField
 import os
 import numpy as np
 
@@ -49,8 +49,12 @@ save_path = os.path.join('./visualize', shape_id)
 visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel', save_path)
 
 # pointclouds
-points_field = PointsField('points.npz')
-points = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
+# points_field = PointsField('points.npz')
+# points = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
+pointcloud_field = PointCloudField('pointcloud.npz')
+pointcloud = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
+
+
 #
 # points_file = np.load(os.path.join(data_dir, shape_id, 'points.npz'))
 # points = points_file['points']
@@ -59,7 +63,7 @@ points = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
 #
 # pointcloud = np.load(os.path.join(data_dir, shape_id, 'pointcloud.npz'))['points']
 
-visualize.visualize_pointcloud_new(points, 'points', save_path)
+visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 # visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 
 # Configure training loop
