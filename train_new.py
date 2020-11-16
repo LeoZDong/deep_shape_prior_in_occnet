@@ -4,6 +4,7 @@ import argparse
 from im2mesh.onet.models import decoder
 from im2mesh.onet.models.decoder_from_random_prior import DecoderOnlyTrainer, DecoderOnlyModule
 from im2mesh.data import VoxelsField
+import os
 
 # Arguments
 parser = argparse.ArgumentParser(
@@ -25,8 +26,8 @@ model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 # Intialize training
 shape_id = '7c13a71834d2b97687cc3b689b9b258d'
 npoints = 1000
-vis_base_dir = os.path.join('/viscam/u/leozdong/occnet/visualize', shape_id)
-trainer = DecoderOnlyTrainer(model, device=device)
+vis_dir = os.path.join('/viscam/u/leozdong/occnet/visualize', shape_id)
+trainer = DecoderOnlyTrainer(model, device=device, vis_dir=vis_dir)
 
 # Print model
 nparameters = sum(p.numel() for p in model.parameters())
@@ -51,6 +52,6 @@ while True:
         print('it=%03d loss=%.4f'
               % (it, loss))
 
-    if it % vis_every == 0:
+    if viz_every > 0 and (it % vis_every) == 0:
         print('Visualizing')
         trainer.visualize_decoder(it)
