@@ -47,11 +47,20 @@ import ipdb; ipdb.set_trace()
 from im2mesh.utils import visualize
 save_path = os.path.join('./visualize', shape_id)
 visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel', save_path)
-points = np.load(os.path.join(data_dir, shape_id, 'points.npz'))
-pointcloud = np.load(os.path.join(data_dir, shape_id, 'pointcloud.npz'))
+
+# pointclouds
+points_field = PointsField('points.npz')
+points = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
+#
+# points_file = np.load(os.path.join(data_dir, shape_id, 'points.npz'))
+# points = points_file['points']
+# points_occ = points_file['occupancies'] / points_file['occupancies'].max()
+# occupied_points = points[points_occ > 0.5]
+#
+# pointcloud = np.load(os.path.join(data_dir, shape_id, 'pointcloud.npz'))['points']
 
 visualize.visualize_pointcloud_new(points, 'points', save_path)
-visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
+# visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 
 # Configure training loop
 it = 0
