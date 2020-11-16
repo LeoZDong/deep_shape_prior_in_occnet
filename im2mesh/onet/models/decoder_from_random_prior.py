@@ -54,11 +54,12 @@ class DecoderOnlyModule(nn.Module):
 
 
 class DecoderOnlyTrainer(BaseTrainer):
-    def __init__(self, model, device=None):
+    def __init__(self, model, device=None, vis_dir):
         super().__init__()
         self.model = model.to(device)
         self.device = device
         self.optimizer = Adam(model.parameters())
+        self.vis_dir = vis_dir
 
     def compute_loss(self, points, points_occ):
         logits = self.model(points)
