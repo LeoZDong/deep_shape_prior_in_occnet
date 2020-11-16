@@ -18,3 +18,4 @@ build
 pwd
 /visualize
 visualize
+*.obj
