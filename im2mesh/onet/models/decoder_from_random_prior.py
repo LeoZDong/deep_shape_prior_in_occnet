@@ -55,6 +55,7 @@ class DecoderOnlyModule(nn.Module):
 
 class DecoderOnlyTrainer(BaseTrainer):
     def __init__(self, model, device=None):
+        super().__init__()
         self.model = model.to(device)
         self.device = device
         self.optimizer = Adam(model.parameters())
