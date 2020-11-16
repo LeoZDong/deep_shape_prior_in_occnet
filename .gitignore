@@ -16,4 +16,4 @@ build
 /im2mesh/utils/libsimplify/build
 .idea/*
 pwd
-
+/visualize

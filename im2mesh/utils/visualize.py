@@ -4,6 +4,9 @@ from mpl_toolkits.mplot3d import Axes3D
 from torchvision.utils import save_image
 import im2mesh.common as common
 import trimesh
+import os
+import torch
+
 
 def visualize_data(data, data_type, out_file):
     r''' Visualizes the data with regard to its type.
@@ -118,7 +121,7 @@ def voxelgrid_to_trianglemesh(voxel, thresh=.5, mode='exact', normalize=True):
 
 
 
-def visualize_voxels_new(voxel, name, save_path, thresh=0.5, mode='exact'):
+def visualize_voxels_new(voxel, name, save_path, thresh=0.5, mode='marching_cubes'):
     # create save path
     if not os.path.isdir(save_path):
         os.makedirs(save_path)

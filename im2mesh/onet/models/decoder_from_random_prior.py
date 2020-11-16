@@ -97,7 +97,7 @@ class DecoderOnlyTrainer(BaseTrainer):
         '''
         device = self.device
 
-        shape = (128, 128, 128)
+        shape = (64, 64, 64)
         p = make_3d_grid([-0.5] * 3, [0.5] * 3, shape).to(device)
         # p = p.expand(batch_size, *p.size())
 
@@ -113,5 +113,6 @@ class DecoderOnlyTrainer(BaseTrainer):
             # vis.visualize_data(
             #     inputs[i].cpu(), self.input_type, input_img_path)
 
+        # import ipdb; ipdb.set_trace()    
         vis.visualize_voxels_new(
             voxels_out, 'it%05d.png' % it, self.vis_dir)
