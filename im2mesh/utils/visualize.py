@@ -35,6 +35,7 @@ def visualize_voxels(voxels, out_file=None, show=False):
         out_file (string): output file
         show (bool): whether the plot should be shown
     '''
+    import ipdb; ipdb.set_trace()
     # Use numpy
     voxels = np.asarray(voxels)
     # Create plot

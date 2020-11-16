@@ -12,7 +12,7 @@ from im2mesh.common import (
 )
 from im2mesh.utils import visualize as vis
 from im2mesh.training import BaseTrainer
-
+import os
 
 
 def generate_n_points(voxels, n, bounds):
@@ -66,6 +66,8 @@ class DecoderOnlyTrainer(BaseTrainer):
         self.device = device
         self.optimizer = Adam(model.parameters())
         self.vis_dir = vis_dir
+        self.probs = nn.Sigmoid()
+        self.threshold = 0.5
 
     def compute_loss(self, points, points_occ):
         logits = self.model(points)
@@ -97,11 +99,13 @@ class DecoderOnlyTrainer(BaseTrainer):
 
         shape = (128, 128, 128)
         p = make_3d_grid([-0.5] * 3, [0.5] * 3, shape).to(device)
-        p = p.expand(batch_size, *p.size())
+        # p = p.expand(batch_size, *p.size())
 
         with torch.no_grad():
             p_r = self.model(p)
 
+        # import ipdb; ipdb.set_trace()    
+        occ_hat = self.probs(p_r).view(*shape)
         voxels_out = (occ_hat >= self.threshold).cpu().numpy()
 
         # for i in trange(batch_size):
