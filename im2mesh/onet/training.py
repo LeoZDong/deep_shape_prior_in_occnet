@@ -140,8 +140,9 @@ class Trainer(BaseTrainer):
             input_img_path = os.path.join(self.vis_dir, '%03d_in.png' % i)
             vis.visualize_data(
                 inputs[i].cpu(), self.input_type, input_img_path)
+
             vis.visualize_voxels(
-                voxels_out[i], os.path.join(self.vis_dir, '%03d.png' % i))
+                voxels_out[i], os.path.join(self.vis_dir, '%03d_it%03d.png' % (i, it)))
 
     def compute_loss(self, data):
         ''' Computes the loss.
@@ -171,3 +172,7 @@ class Trainer(BaseTrainer):
         loss = loss + loss_i.sum(-1).mean()
 
         return loss
+
+    def change_vis_dir(self, new_dir):
+        ''' Changes visualization directory. '''
+        self.vis_dir = new_dir

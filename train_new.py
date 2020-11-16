@@ -23,7 +23,9 @@ device = torch.device("cuda" if is_cuda else "cpu")
 model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 
 # Intialize training
+shape_id = '7c13a71834d2b97687cc3b689b9b258d'
 npoints = 1000
+vis_base_dir = os.path.join('/viscam/u/leozdong/occnet/visualize', shape_id)
 trainer = DecoderOnlyTrainer(model, device=device)
 
 # Print model
@@ -33,12 +35,13 @@ print('Total number of parameters: %d' % nparameters)
 
 voxel_field = VoxelsField("model.binvox")
 # TODO: figure out what the 0, 0 means; make this cleaner
-voxel_data = torch.FloatTensor(voxel_field.load('./data/ShapeNet/02958343/7c13a71834d2b97687cc3b689b9b258d/', 0, 0))
+voxel_data = torch.FloatTensor(voxel_field.load(os.path.join('./data/ShapeNet/02958343', shape_id), 0, 0))
 print(voxel_data.shape)
 
 it = 0
 
 print_every = 1
+vis_every = 1000
 while True:
     it += 1
     loss = trainer.train_step(voxel_data, n_points=10000)
@@ -48,4 +51,6 @@ while True:
         print('it=%03d loss=%.4f'
               % (it, loss))
 
-
+    if it % vis_every == 0:
+        print('Visualizing')
+        trainer.visualize_decoder(it)

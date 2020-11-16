@@ -79,3 +79,27 @@ class DecoderOnlyTrainer(BaseTrainer):
         self.optimizer.step()
         return loss
 
+    def visualize_decoder(self, it):
+        ''' Performs a visualization step for the data.
+
+        Args:
+            data (dict): data dictionary
+        '''
+        device = self.device
+
+        shape = (128, 128, 128)
+        p = make_3d_grid([-0.5] * 3, [0.5] * 3, shape).to(device)
+        p = p.expand(batch_size, *p.size())
+
+        with torch.no_grad():
+            p_r = self.model(p)
+
+        voxels_out = (occ_hat >= self.threshold).cpu().numpy()
+
+        # for i in trange(batch_size):
+            # input_img_path = os.path.join(self.vis_dir, '%03d_in.png' % i)
+            # vis.visualize_data(
+            #     inputs[i].cpu(), self.input_type, input_img_path)
+
+        vis.visualize_voxels(
+            voxels_out, os.path.join(self.vis_dir, 'it%03d.png' % it))
