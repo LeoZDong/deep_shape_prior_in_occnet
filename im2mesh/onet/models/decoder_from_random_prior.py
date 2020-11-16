@@ -54,7 +54,7 @@ class DecoderOnlyModule(nn.Module):
 
 
 class DecoderOnlyTrainer(BaseTrainer):
-    def __init__(self, model, device=None, vis_dir):
+    def __init__(self, model, device=None, vis_dir=None):
         super().__init__()
         self.model = model.to(device)
         self.device = device
