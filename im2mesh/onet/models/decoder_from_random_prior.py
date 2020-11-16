@@ -7,6 +7,12 @@ from torch import nn
 from torch.nn import functional as F
 from torch import distributions as dist
 from torch.optim import Adam
+from im2mesh.common import (
+    compute_iou, make_3d_grid
+)
+from im2mesh.utils import visualize as vis
+from im2mesh.training import BaseTrainer
+
 
 
 def generate_n_points(voxels, n, bounds):
