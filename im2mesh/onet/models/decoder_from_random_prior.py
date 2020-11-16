@@ -104,14 +104,14 @@ class DecoderOnlyTrainer(BaseTrainer):
         with torch.no_grad():
             p_r = self.model(p)
 
-        # import ipdb; ipdb.set_trace()    
-        occ_hat = self.probs(p_r).view(*shape)
-        voxels_out = (occ_hat >= self.threshold).cpu().numpy()
+        # import ipdb; ipdb.set_trace()
+        occ_hat = self.probs(p_r).view(1, *shape)
+        voxels_out = (occ_hat >= self.threshold).cpu()
 
         # for i in trange(batch_size):
             # input_img_path = os.path.join(self.vis_dir, '%03d_in.png' % i)
             # vis.visualize_data(
             #     inputs[i].cpu(), self.input_type, input_img_path)
 
-        vis.visualize_voxels(
-            voxels_out, os.path.join(self.vis_dir, 'it%03d.png' % it))
+        vis.visualize_voxels_new(
+            voxels_out, 'it%05d.png' % it, self.vis_dir)
