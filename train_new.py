@@ -52,7 +52,7 @@ visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel', save_path
 # points_field = PointsField('points.npz')
 # points = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
 pointcloud_field = PointCloudField('pointcloud.npz')
-pointcloud = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
+pointcloud = pointcloud_field.load(os.path.join(data_dir, shape_id), 0, 0)[None]
 
 
 #
