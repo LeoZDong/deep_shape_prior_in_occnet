@@ -5,6 +5,7 @@ from im2mesh.onet.models import decoder
 from im2mesh.onet.models.decoder_from_random_prior import DecoderOnlyTrainer, DecoderOnlyModule
 from im2mesh.data import VoxelsField
 import os
+import numpy as np
 
 # Arguments
 parser = argparse.ArgumentParser(
@@ -26,7 +27,7 @@ model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 # Intialize training
 shape_id = '7c13a71834d2b97687cc3b689b9b258d'
 npoints = 1000
-vis_dir = os.path.join('/viscam/u/leozdong/occnet/visualize', shape_id)
+vis_dir = os.path.join('./visualize', shape_id, 'iterations')
 trainer = DecoderOnlyTrainer(model, device=device, vis_dir=vis_dir)
 
 # Print model
@@ -34,13 +35,26 @@ nparameters = sum(p.numel() for p in model.parameters())
 print(model)
 print('Total number of parameters: %d' % nparameters)
 
+# Load data
+data_dir = './data/ShapeNet/02958343'
 voxel_field = VoxelsField("model.binvox")
 # TODO: figure out what the 0, 0 means; make this cleaner
-voxel_data = torch.FloatTensor(voxel_field.load(os.path.join('./data/ShapeNet/02958343', shape_id), 0, 0))
+voxel_data = torch.FloatTensor(voxel_field.load(os.path.join(data_dir, shape_id), 0, 0))
 print(voxel_data.shape)
 
-it = 0
+# Visualize initial inputs
+import ipdb; ipdb.set_trace()
+from im2mesh.utils import visualize
+save_path = os.path.join('./visualize', shape_id)
+visualize.visualize_voxels_new(voxel_data, 'input_voxel', save_path)
+points = np.load(os.path.join(data_dir, shape_id, 'points.npz'))
+pointcloud = np.load(os.path.join(data_dir, shape_id, 'pointcloud.npz'))
 
+visualize.visualize_pointcloud_new(points, 'points', save_path)
+visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
+
+# Configure training loop
+it = 0
 print_every = 1
 vis_every = 100
 while True:

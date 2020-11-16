@@ -6,6 +6,7 @@ import im2mesh.common as common
 import trimesh
 import os
 import torch
+import o3d
 
 
 def visualize_data(data, data_type, out_file):
@@ -159,6 +160,16 @@ def visualize_voxels_new(voxel, name, save_path, thresh=0.5, mode='marching_cube
             for face in faces:
                 f.write('f %d %d %d\n' % tuple(face + 1))
 
+def visualize_pointcloud_new(pointcloud, name, save_path):
+    """Save a single pointcloud as .ply file."""
+    # Open 3D can only store pointcloud as .ply
+    save_file_ply = os.path.join(save_path, "{}.ply".format(name))
+    pcd = o3d.geometry.PointCloud()
+    pcd.points = o3d.utility.Vector3dVector(pointcloud)
+    o3d.io.write_point_cloud(save_file_ply, pcd)
+
+    # Convert .ply to .obj and delete temp .ply file
+    # ply_to_obj(save_file_ply, save_path, name, remove_ply=False)
 
 
 
