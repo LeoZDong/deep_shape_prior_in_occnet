@@ -46,7 +46,7 @@ print(voxel_data.shape)
 import ipdb; ipdb.set_trace()
 from im2mesh.utils import visualize
 save_path = os.path.join('./visualize', shape_id)
-visualize.visualize_voxels_new(voxel_data, 'input_voxel', save_path)
+visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel', save_path)
 points = np.load(os.path.join(data_dir, shape_id, 'points.npz'))
 pointcloud = np.load(os.path.join(data_dir, shape_id, 'pointcloud.npz'))
 

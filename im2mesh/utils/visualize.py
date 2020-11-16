@@ -159,6 +159,8 @@ def visualize_voxels_new(voxel, name, save_path, thresh=0.5, mode='marching_cube
             for face in faces:
                 f.write('f %d %d %d\n' % tuple(face + 1))
 
+
+
 def visualize_pointcloud_new(pointcloud, name, save_path):
     """Save a single pointcloud as .ply file."""
     # Open 3D can only store pointcloud as .ply
