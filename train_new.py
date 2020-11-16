@@ -3,7 +3,7 @@ from torch import optim
 import argparse
 from im2mesh.onet.models import decoder
 from im2mesh.onet.models.decoder_from_random_prior import DecoderOnlyTrainer, DecoderOnlyModule
-from im2mesh.data import VoxelsField
+from im2mesh.data import VoxelsField, PointsField
 import os
 import numpy as np
 
