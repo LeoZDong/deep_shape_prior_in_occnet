@@ -46,7 +46,9 @@ print(voxel_data.shape)
 # import ipdb; ipdb.set_trace()
 from im2mesh.utils import visualize
 save_path = os.path.join('./visualize', shape_id)
-visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel', save_path, mode='exact')
+visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel_exact', save_path, mode='exact')
+visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel_mc', save_path, mode='marching_cubes')
+
 
 # pointclouds
 # points_field = PointsField('points.npz')
@@ -80,7 +82,7 @@ visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 # Configure training loop
 it = 0
 print_every = 10
-vis_every = 5000
+vis_every = 1000
 while True:
     it += 1
     loss = trainer.train_step(voxel_data, n_points=10000)
