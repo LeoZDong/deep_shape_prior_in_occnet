@@ -85,7 +85,7 @@ def plot_loss(loss_rec):
     x = np.arange(1, len(loss_rec) + 1, 1)
     y = loss_rec
     fig, ax = plt.subplots()
-    ax.plot(t, s)
+    ax.plot(x, y)
     ax.set(xlabel='iteration', ylabel='loss',
            title='Loss record')
 
@@ -114,6 +114,6 @@ while True:
         trainer.visualize_decoder(it, loss)
 
     # Plot loss
-    if plot_every > 0 and (it % plot_every) == 0:
+    if plot_every > 0 and (it == 1 or (it % plot_every) == 0):
         print("Plotting...")
         plot_loss(loss_rec)
