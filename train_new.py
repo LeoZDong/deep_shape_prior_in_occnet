@@ -115,7 +115,7 @@ while True:
     if vis_every > 0 and (it == 1 or (it % vis_every) == 0):
         print('Visualizing...')
         sub_dir = round(it, -4)
-        trainer.visualize_decoder(it, loss)
+        trainer.visualize_decoder(it, loss, sub_dir)
 
     # Plot loss
     if plot_every > 0 and (it == 1 or (it % plot_every) == 0):
