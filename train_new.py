@@ -98,7 +98,7 @@ def plot_loss(loss_rec):
 it = 0
 print_every = 10
 vis_every = 1000
-plot_every = 1000
+plot_every = 5000
 loss_rec = []
 while True:
     it += 1
