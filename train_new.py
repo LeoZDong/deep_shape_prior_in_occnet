@@ -79,6 +79,6 @@ while True:
         print('it=%03d loss=%.4f'
               % (it, loss))
 
-    if it == 1 or (vis_every > 0 and (it % vis_every) == 0):
+    if vis_every > 0 and (it == 1 or (it % vis_every) == 0):
         print('Visualizing')
         trainer.visualize_decoder(it, loss)
