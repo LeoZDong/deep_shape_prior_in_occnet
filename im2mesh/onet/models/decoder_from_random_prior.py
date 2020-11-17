@@ -98,7 +98,7 @@ class DecoderOnlyTrainer(BaseTrainer):
         '''
         device = self.device
 
-        shape = (64, 64, 64)
+        shape = (128, 128, 128)
         p = make_3d_grid([-0.5] * 3, [0.5] * 3, shape).to(device)
         # p = p.expand(batch_size, *p.size())
 
