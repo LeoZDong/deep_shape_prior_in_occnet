@@ -79,19 +79,41 @@ visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 #
 #
 
+def plot_loss(loss_rec):
+    import matplotlib
+    import matplotlib.pyplot as plt
+    x = np.arange(1, len(loss_rec) + 1, 1)
+    y = loss_rec
+    subplots()
+    ax.plot(t, s)
+    ax.set(xlabel='iteration', ylabel='loss',
+           title='Loss record')
+
+    fig.savefig(os.path.join(save_path, "loss.png"))
+
 # Configure training loop
 it = 0
 print_every = 10
 vis_every = 1000
+plot_every = 1000
+loss_rec = []
 while True:
     it += 1
     loss = trainer.train_step(voxel_data, n_points=10000)
+    loss_rec.append(loss)
 
     # Print output
     if print_every > 0 and (it % print_every) == 0:
         print('it=%03d loss=%.4f'
               % (it, loss))
 
+    # Visualize shape
     if vis_every > 0 and (it == 1 or (it % vis_every) == 0):
-        print('Visualizing')
+        print('Visualizing...')
+        sub_dir = round(it, -4)
         trainer.visualize_decoder(it, loss)
+
+    # Plot loss
+    if plot_every > 0 and (it % plot_every) == 0:
+        print("Plotting...")
+        plot_loss(loss_rec)
