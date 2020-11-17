@@ -43,7 +43,7 @@ voxel_data = torch.FloatTensor(voxel_field.load(os.path.join(data_dir, shape_id)
 print(voxel_data.shape)
 
 # Visualize initial inputs
-import ipdb; ipdb.set_trace()
+# import ipdb; ipdb.set_trace()
 from im2mesh.utils import visualize
 save_path = os.path.join('./visualize', shape_id)
 visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel', save_path)
