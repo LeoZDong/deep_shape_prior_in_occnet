@@ -6,7 +6,10 @@ import im2mesh.common as common
 import trimesh
 import os
 import torch
-import open3d as o3d
+try:
+    import open3d as o3d
+except ImportError:
+    pass
 
 def visualize_data(data, data_type, out_file):
     r''' Visualizes the data with regard to its type.
