@@ -115,4 +115,4 @@ class DecoderOnlyTrainer(BaseTrainer):
 
         # import ipdb; ipdb.set_trace()
         vis.visualize_voxels_new(
-            voxels_out, 'it{:05d}_{:.3f}'.format(it, loss, self.vis_dir))
+            voxels_out, 'it{:05d}_{:.3f}'.format(it, loss), self.vis_dir)
