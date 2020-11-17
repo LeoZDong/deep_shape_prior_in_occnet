@@ -66,6 +66,16 @@ pointcloud = pointcloud_field.load(os.path.join(data_dir, shape_id), 0, 0)[None]
 visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 # visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 
+
+# Test points sampling function
+import ipdb; ipdb.set_trace()
+from im2mesh.onet.models.decoder_from_random_prior import generate_n_points
+bounds = (-0.5, 0.5, -0.5, 0.5, -0.5, 0.5)
+test_points = generate_n_points(voxel_data, 100000, bounds)
+visualize.visualize_pointcloud_new(gen_points, 'test', save_path)
+
+
+
 # Configure training loop
 it = 0
 print_every = 10
