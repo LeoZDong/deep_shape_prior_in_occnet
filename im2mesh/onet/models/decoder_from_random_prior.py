@@ -115,6 +115,6 @@ class DecoderOnlyTrainer(BaseTrainer):
             #     inputs[i].cpu(), self.input_type, input_img_path)
 
         # import ipdb; ipdb.set_trace()
-        vis_dir = os.path.join(self.viz_dir, '{:06}'.format(sub_dir))
+        vis_dir = os.path.join(self.vis_dir, '{:06}'.format(sub_dir))
         vis.visualize_voxels_new(
             voxels_out, 'it{:05d}_{:.3f}'.format(it, loss), vis_dir)
