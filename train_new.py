@@ -26,7 +26,8 @@ model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 
 # Intialize training
 # shape_id = '7c13a71834d2b97687cc3b689b9b258d'
-shape_id = '24d07a3c5ff0840872152988eac576ab'
+# shape_id = '24d07a3c5ff0840872152988eac576ab'
+shape_id = '36190ce6fe041e452d647b1c17442c93'
 
 npoints = 1000
 vis_dir = os.path.join('./visualize', shape_id, 'iterations')
@@ -73,13 +74,13 @@ visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 
 
 # Test points sampling function
-# import ipdb; ipdb.set_trace()
-# from im2mesh.onet.models.decoder_from_random_prior import generate_n_points
-# bounds = (-0.5, 0.5, -0.5, 0.5, -0.5, 0.5)
-# test_points, points_occ = generate_n_points(voxel_data, 100000, bounds)
-# test_points = test_points.cpu().numpy()[points_occ > 0.5]
-# visualize.visualize_pointcloud_new(test_points, 'test', save_path)
-#
+import ipdb; ipdb.set_trace()
+from im2mesh.onet.models.decoder_from_random_prior import generate_n_points
+bounds = (-0.5, 0.5, -0.5, 0.5, -0.5, 0.5)
+test_points, points_occ = generate_n_points(voxel_data, 100000, bounds)
+test_points = test_points.cpu().numpy()[points_occ > 0.5]
+visualize.visualize_pointcloud_new(test_points, 'test', save_path)
+
 #
 
 def plot_loss(loss_rec):
