@@ -84,7 +84,7 @@ def plot_loss(loss_rec):
     import matplotlib.pyplot as plt
     x = np.arange(1, len(loss_rec) + 1, 1)
     y = loss_rec
-    subplots()
+    fig, ax = plt.subplots()
     ax.plot(t, s)
     ax.set(xlabel='iteration', ylabel='loss',
            title='Loss record')
