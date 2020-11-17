@@ -75,7 +75,6 @@ visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 
 
 # Test points sampling function
-import ipdb; ipdb.set_trace()
 from im2mesh.onet.models.decoder_from_random_prior import generate_n_points
 bounds = (-0.5, 0.5, -0.5, 0.5, -0.5, 0.5)
 test_points, points_occ = generate_n_points(voxel_data, 100000, bounds)
