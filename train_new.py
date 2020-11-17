@@ -28,6 +28,7 @@ model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 shape_id = '7c13a71834d2b97687cc3b689b9b258d'
 npoints = 1000
 vis_dir = os.path.join('./visualize', shape_id, 'iterations')
+os.system('rm -rf {}'.format(vis_dir))
 trainer = DecoderOnlyTrainer(model, device=device, vis_dir=vis_dir)
 
 # Print model
