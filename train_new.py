@@ -82,14 +82,17 @@ visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 def plot_loss(loss_rec):
     import matplotlib
     import matplotlib.pyplot as plt
-    x = np.arange(1, len(loss_rec) + 1, 1)
-    y = loss_rec
-    fig, ax = plt.subplots()
-    ax.plot(x, y)
-    ax.set(xlabel='iteration', ylabel='loss',
-           title='Loss record')
+    start = 500
 
-    fig.savefig(os.path.join(save_path, "loss.png"))
+    if len(loss_rec) > start:
+        x = np.arange(1, len(loss_rec) + 1, 1)
+        y = loss_rec
+        fig, ax = plt.subplots()
+        ax.plot(x[start:], y[start:])
+        ax.set(xlabel='iteration', ylabel='loss',
+               title='Loss record starting at 500 iterations')
+
+        fig.savefig(os.path.join(save_path, "loss.png"), dpi=1000)
 
 # Configure training loop
 it = 0
