@@ -69,7 +69,7 @@ visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
 # Configure training loop
 it = 0
 print_every = 10
-vis_every = 500
+vis_every = 5000
 while True:
     it += 1
     loss = trainer.train_step(voxel_data, n_points=10000)
@@ -79,6 +79,6 @@ while True:
         print('it=%03d loss=%.4f'
               % (it, loss))
 
-    if vis_every > 0 and (it % vis_every) == 0:
+    if it == 1 or vis_every > 0 and (it % vis_every) == 0:
         print('Visualizing')
         trainer.visualize_decoder(it, loss)
