@@ -53,7 +53,7 @@ visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel', save_path
 # points = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
 pointcloud_field = PointCloudField('pointcloud.npz')
 pointcloud = pointcloud_field.load(os.path.join(data_dir, shape_id), 0, 0)[None]
-import ipdb; ipdb.set_trace()
+# import ipdb; ipdb.set_trace ()
 
 #
 # points_file = np.load(os.path.join(data_dir, shape_id, 'points.npz'))
