@@ -27,7 +27,8 @@ model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 # Intialize training
 # shape_id = '7c13a71834d2b97687cc3b689b9b258d'
 # shape_id = '24d07a3c5ff0840872152988eac576ab'
-shape_id = '36190ce6fe041e452d647b1c17442c93'
+# shape_id = '36190ce6fe041e452d647b1c17442c93'  # does not have model
+shape_id = '49c2f144b928726572a38ac2b8f5cd48'
 
 npoints = 1000
 vis_dir = os.path.join('./visualize', shape_id, 'iterations')
