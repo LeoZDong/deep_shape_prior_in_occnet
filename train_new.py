@@ -114,7 +114,7 @@ while True:
     # Visualize shape
     if vis_every > 0 and (it == 1 or (it % vis_every) == 0):
         print('Visualizing...')
-        sub_dir = round(it, -4)
+        sub_dir = (it // 10000) * 10000
         trainer.visualize_decoder(it, loss, sub_dir)
 
     # Plot loss
