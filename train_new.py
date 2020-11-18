@@ -55,8 +55,8 @@ pointcloud = pointcloud_field.load(os.path.join(data_dir, shape_id), 0, 0)[None]
 # Points are points randomly sampled in space with an associated occupancy
 points_field = PointsField('points.npz', unpackbits=True)
 points_dict = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
-points = points_dict[None]
-points_occ = points_dict['occ']
+points = torch.FloatTensor(points_dict[None])
+points_occ = torch.FloatTensor(points_dict['occ'])
 
 
 #### Visualize initial inputs ####
