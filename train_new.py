@@ -11,11 +11,11 @@ import numpy as np
 parser = argparse.ArgumentParser(
     description='Train a 3D reconstruction model.'
 )
-parser.add_argument('config', type=str, help='Path to config file.')
-parser.add_argument('--no-cuda', action='store_true', help='Do not use cuda.')
-parser.add_argument('--exit-after', type=int, default=-1,
-                    help='Checkpoint and exit after specified number of seconds'
-                         'with exit code 2.')
+# parser.add_argument('config', type=str, default=None, help='Path to config file.')
+# parser.add_argument('--no-cuda', action='store_true', help='Do not use cuda.')
+# parser.add_argument('--exit-after', type=int, default=-1,
+#                     help='Checkpoint and exit after specified number of seconds'
+#                          'with exit code 2.')
 parser.add_argument('--id', type=str, default=None, help="ID of the shape to process.")
 
 args = parser.parse_args()
