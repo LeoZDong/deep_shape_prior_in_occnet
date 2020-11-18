@@ -86,7 +86,7 @@ def plot_metric(records, its, plot_title, filename, start_it=1):
         y = np.array(records)
         fig, ax = plt.subplots()
         ax.plot(x[np.where(x >= start_it)], y[np.where(x >= start_it)])
-        ax.set(xlabel='iteration', ylabel='loss',
+        ax.set(xlabel='iteration', ylabel='metric',
                title=plot_title)
 
         fig.savefig(os.path.join(save_path, filename), dpi=1000)
