@@ -158,9 +158,9 @@ while max_it is None or it <= max_it:
     if plot_every > 0 and (it == max_it or (it % plot_every) == 0):
         print("Plotting...")
         plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), \
-        "Training loss starting at iteration (smoothed)", '0_loss.png', start_it=1, window=10)
+        "Training loss starting at iteration 500 (smoothed)", '0_loss.png', start_it=500, window=10)
         if eval_every > 0:
             plot_metric(entropy_rec, eval_it, \
-            "Validation cross entropy (smoothed)", '0_entropy.png', start_it=1, window=1)
+            "Validation cross entropy (smoothed)", '0_entropy.png', start_it=1, window=5)
             plot_metric(iou_rec, eval_it, \
-            "Validation IoU (smoothed)", '0_iou.png', start_it=1, window=1)
+            "Validation IoU (smoothed)", '0_iou.png', start_it=1, window=5)
