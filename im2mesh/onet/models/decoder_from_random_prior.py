@@ -102,6 +102,7 @@ class DecoderOnlyTrainer(BaseTrainer):
 
         # for cross entropy loss validation
         logits = self.model(points)
+        import ipdb; ipdb.set_trace()
         eval_dict['cross_entropy'] = F.binary_cross_entropy_with_logits(logits, points_occ, reduction='mean')
 
         # for iou validation
@@ -145,4 +146,3 @@ class DecoderOnlyTrainer(BaseTrainer):
         vis_dir = os.path.join(self.vis_dir, '{:06}'.format(sub_dir))
         vis.visualize_voxels_new(
             voxels_out, 'it{:06d}_{:.3f}'.format(it, loss), vis_dir)
-

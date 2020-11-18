@@ -21,19 +21,15 @@ parser.add_argument('--exit-after', type=int, default=-1,
 is_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if is_cuda else "cpu")
 
-# Model
+# Define model
 model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 
-# Intialize training
+#### Intialize training ####
 shape_id = '7c13a71834d2b97687cc3b689b9b258d'
 # shape_id = '24d07a3c5ff0840872152988eac576ab'
 # shape_id = '36190ce6fe041e452d647b1c17442c93'  # does not have model
 # shape_id = '49c2f144b928726572a38ac2b8f5cd48'
 # shape_id = '53737a4b45fc06963ffe0e5069bf1eb5'
-
-
-
-npoints = 1000
 vis_dir = os.path.join('./visualize', shape_id, 'iterations')
 os.system('rm -rf {}'.format(vis_dir))
 trainer = DecoderOnlyTrainer(model, device=device, vis_dir=vis_dir)
@@ -43,50 +39,40 @@ nparameters = sum(p.numel() for p in model.parameters())
 print(model)
 print('Total number of parameters: %d' % nparameters)
 
-# Load data
+
+#### Load data ####
+# Training data
 data_dir = './data/ShapeNet/02958343'
 voxel_field = VoxelsField("model.binvox")
 # TODO: figure out what the 0, 0 means; make this cleaner
 voxel_data = torch.FloatTensor(voxel_field.load(os.path.join(data_dir, shape_id), 0, 0))
 print(voxel_data.shape)
 
-# Visualize initial inputs
-# import ipdb; ipdb.set_trace()
-from im2mesh.utils import visualize
-save_path = os.path.join('./visualize', shape_id)
-visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel_exact', save_path, mode='exact')
-visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel_mc', save_path, mode='marching_cubes')
-
-
-# pointclouds
+# Pointclouds are points sampled from the surface of the mesh
 pointcloud_field = PointCloudField('pointcloud.npz')
 pointcloud = pointcloud_field.load(os.path.join(data_dir, shape_id), 0, 0)[None]
-# import ipdb; ipdb.set_trace ()
 
-# points for validation
-points_field = PointsField('points.npz')
+# Points are points randomly sampled in space with an associated occupancy
+points_field = PointsField('points.npz', unpackbits=True)
 points_dict = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
 points = points_dict[None]
 points_occ = points_dict['occ']
 
-#
-# points_file = np.load(os.path.join(data_dir, shape_id, 'points.npz'))
-# points = points_file['points']
-# points_occ = points_file['occupancies'] / points_file['occupancies'].max()
-# occupied_points = points[points_occ > 0.5]
-#
-# pointcloud = np.load(os.path.join(data_dir, shape_id, 'pointcloud.npz'))['points']
 
-visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
-# visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
-
-
-# Test points sampling function
+#### Visualize initial inputs ####
+from im2mesh.utils import visualize
+save_path = os.path.join('./visualize', shape_id)
+visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel_exact', save_path, mode='exact')
+visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel_mc', save_path, mode='marching_cubes')
+# points sampling function
 from im2mesh.onet.models.decoder_from_random_prior import generate_n_points
-bounds = (-0.5, 0.5, -0.5, 0.5, -0.5, 0.5)
+bounds = (-0.55, 0.55, -0.55, 0.55, -0.55, 0.55)
 test_points, points_occ = generate_n_points(voxel_data, 100000, bounds)
 test_points = test_points.cpu().numpy()[points_occ > 0.5]
 visualize.visualize_pointcloud_new(test_points, 'test', save_path)
+visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
+
+
 
 #
 
@@ -102,7 +88,7 @@ def plot_loss(loss_rec):
         ax.plot(x[start:], y[start:])
         ax.set(xlabel='iteration', ylabel='loss',
                title='Loss record starting at 500 iterations')
-        
+
         fig.savefig(os.path.join(save_path, "loss.png"), dpi=1000)
 
 def plot_eval(entropy_rec, iou_rec):
@@ -112,10 +98,10 @@ def plot_eval(entropy_rec, iou_rec):
     x = np.arange(1, len(entropy_rec) + 1, 1)
     y1 = entropy_rec
     y2 = iou_rec
-    
+
     fig_entropy, ax1 = plt.subplots()
     fig_iou, ax2 = plt.subplots()
-    
+
     ax1.plot(x, y1)
     ax2.plot(x, y2)
     ax1.set(xlabel='iteration', ylabel='eval',
@@ -167,4 +153,3 @@ while True:
         ## for eval
         print("Plotting eval...")
         plot_eval(entropy_rec, iou_rec)
-
