@@ -159,6 +159,6 @@ while max_it is None or it <= max_it:
         "Training loss starting at iteration (smoothed)", '0_loss.png', start_it=1, window=10)
         if eval_every > 0:
             plot_metric(entropy_rec, eval_it, \
-            "Validation cross entropy (smoothed)", '0_entropy.png', start_it=1, window=10)
+            "Validation cross entropy (smoothed)", '0_entropy.png', start_it=1, window=1)
             plot_metric(iou_rec, eval_it, \
-            "Validation IoU (smoothed)", '0_iou.png', start_it=1, window=10)
+            "Validation IoU (smoothed)", '0_iou.png', start_it=1, window=1)
