@@ -93,9 +93,11 @@ class DecoderOnlyTrainer(BaseTrainer):
 
     def eval_step(self, points_input, points_occ):
         # points_dict[None] = points_input is a numpy array, must be tensor
-        points = torch.from_numpy(points_input)
-        points = points.float().to(self.device)
-        points_occ = points_occ.float().to(self.device)
+        # points = torch.from_numpy(points_input)
+        # points = points.float().to(self.device)
+        # points_occ = points_occ.float().to(self.device)
+        points_input = points_input.to(self.device)
+        points_occ = points_occ.to(self.device)
 
         self.model.eval()
         eval_dict = {}
