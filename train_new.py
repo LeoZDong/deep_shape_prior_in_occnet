@@ -51,7 +51,7 @@ print(voxel_data.shape)
 # Pointclouds are points sampled from the surface of the mesh
 pointcloud_field = PointCloudField('pointcloud.npz')
 points_surface = pointcloud_field.load(os.path.join(data_dir, shape_id), 0, 0)[None]
-points_surface_occ = np.ones(points_surface.shape(0))
+points_surface_occ = np.ones(points_surface.shape[0])
 
 # Points are points randomly sampled in space with an associated occupancy
 points_field = PointsField('points.npz', unpackbits=True)
