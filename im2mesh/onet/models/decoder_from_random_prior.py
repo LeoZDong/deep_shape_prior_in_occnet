@@ -92,32 +92,27 @@ class DecoderOnlyTrainer(BaseTrainer):
 
 
     def eval_step(self, points_input, points_occ):
-        # points_dict[None] = points_input is a numpy array, must be tensor
-        # points = torch.from_numpy(points_input)
-        # points = points.float().to(self.device)
-        # points_occ = points_occ.float().to(self.device)
-        points = points_input.to(self.device)
-        points_occ = points_occ.to(self.device)
+        with torch.no_grad():
+            points = points_input.to(self.device)
+            points_occ = points_occ.to(self.device)
 
-        self.model.eval()
-        eval_dict = {}
+            self.model.eval()
+            eval_dict = {}
 
-        # for cross entropy loss validation
-        logits = self.model(points)
-        # import ipdb; ipdb.set_trace()
-        eval_dict['cross_entropy'] = F.binary_cross_entropy_with_logits(logits, points_occ, reduction='mean')
+            # for cross entropy loss validation
+            logits = self.model(points)
+            eval_dict['cross_entropy'] = F.binary_cross_entropy_with_logits(logits, points_occ, reduction='mean')
 
-        # for iou validation
-        # import ipdb; ipdb.set_trace()
-        m = nn.Sigmoid()
-        predicted_occ = m(logits)
+            # for iou validation
+            m = nn.Sigmoid()
+            predicted_occ = m(logits)
 
-        pred_occ_np = (predicted_occ >= self.threshold).cpu().numpy()
-        orig_occ_np = (points_occ >= self.threshold).cpu().numpy()
-        iou = compute_iou(pred_occ_np, orig_occ_np).mean()
-        eval_dict['iou'] = iou
+            pred_occ_np = (predicted_occ >= self.threshold).cpu().numpy()
+            orig_occ_np = (points_occ >= self.threshold).cpu().numpy()
+            iou = compute_iou(pred_occ_np, orig_occ_np).mean()
+            eval_dict['iou'] = iou
 
-        return eval_dict
+            return eval_dict
 
 
     def visualize_decoder(self, it, loss, sub_dir=0):

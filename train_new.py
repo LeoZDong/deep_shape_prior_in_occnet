@@ -77,20 +77,19 @@ visualize.visualize_pointcloud_new(points[points_occ > 0.5].cpu().numpy(), 'eval
 
 
 
-def plot_loss(loss_rec):
+def plot_metric(records, its, plot_title, filename, start_it=1):
     import matplotlib
     import matplotlib.pyplot as plt
-    start = 500
 
-    if len(loss_rec) > start:
-        x = np.arange(1, len(loss_rec) + 1, 1)
-        y = loss_rec
+    if its[-1] > start_it:
+        x = its
+        y = records
         fig, ax = plt.subplots()
         ax.plot(x[start:], y[start:])
         ax.set(xlabel='iteration', ylabel='loss',
-               title='Loss record starting at 500 iterations')
+               title=plot_title)
 
-        fig.savefig(os.path.join(save_path, "loss.png"), dpi=1000)
+        fig.savefig(os.path.join(save_path, filename), dpi=1000)
 
 def plot_eval(entropy_rec, iou_rec):
     import matplotlib
@@ -118,22 +117,28 @@ def plot_eval(entropy_rec, iou_rec):
 it = 0
 print_every = 10
 vis_every = 1000
-plot_every = 5000
+plot_every = 100
+eval_every = 10
+# metrics records
 loss_rec = []
-## for eval
+train_it = []  # used when smoothing is performed
 entropy_rec = []
 iou_rec = []
+eval_it = []
 while True:
     it += 1
+    # Train step
     loss = trainer.train_step(voxel_data, n_points=10000)
     loss_rec.append(loss.item())
 
-    ## for eval
-    eval_dict = trainer.eval_step(points, points_occ)
-    entropy_eval = eval_dict['cross_entropy']
-    iou_eval = eval_dict['iou']
-    entropy_rec.append(entropy_eval.item())
-    iou_rec.append(iou_eval.item())
+    # Evaluation step
+    if eval_every > 0 and (it % eval_every) == 0:
+        eval_dict = trainer.eval_step(points, points_occ)
+        entropy_eval = eval_dict['cross_entropy']
+        iou_eval = eval_dict['iou']
+        entropy_rec.append(entropy_eval.item())
+        iou_rec.append(iou_eval.item())
+        eval_it.append(it)
 
     # Print output
     if print_every > 0 and (it % print_every) == 0:
@@ -146,11 +151,9 @@ while True:
         sub_dir = (it // 10000) * 10000
         trainer.visualize_decoder(it, loss, sub_dir)
 
-    # Plot loss
+    # Plot metrics
     if plot_every > 0 and (it == 1 or (it % plot_every) == 0):
-        print("Plotting loss...")
-        plot_loss(loss_rec)
-
-        ## for eval
-        print("Plotting eval...")
-        plot_eval(entropy_rec, iou_rec)
+        print("Plotting...")
+        plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), "Training loss starting at iteration 500", 'loss.png', start_it=500)
+        plot_metric(entropy_rec, eval_it, "Validation cross entropy", 'entropy.png', start_it=1)
+        plot_metric(iou_rec, eval_it, "Validation IoU", 'iou.png', start_it=1)
