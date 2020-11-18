@@ -1,5 +1,5 @@
-mkdir data
-cd data
+mkdir data_full
+cd data_full
 wget https://s3.eu-central-1.amazonaws.com/avg-projects/occupancy_networks/data/dataset_small_v1.1.zip
 unzip dataset_small_v1.1.zip
 
