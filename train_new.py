@@ -132,7 +132,7 @@ def plot_smooth_eval(entropy_rec, iou_rec, window_size):
 # Configure training loop
 print_every = 10
 vis_every = 100
-plot_every = 100
+plot_every = 500
 eval_every = 1
 # metrics records
 loss_rec = []
@@ -141,7 +141,7 @@ iou_rec = []
 eval_it = []
 
 it = 0
-max_it = 500
+max_it = 2000
 while it <= max_it:
     it += 1
     # Train step
