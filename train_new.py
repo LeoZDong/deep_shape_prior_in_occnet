@@ -129,19 +129,21 @@ def plot_smooth_eval(entropy_rec, iou_rec, window_size):
     fig_entropy.savefig(os.path.join(save_path, "smootheval_entropy.png"), dpi=1000)
     fig_iou.savefig(os.path.join(save_path, "smootheval_iou.png"), dpi=1000)
 
+
 # Configure training loop
-print_every = 10
-vis_every = 100
-plot_every = 500
-eval_every = 1
 # metrics records
 loss_rec = []
 entropy_rec = []
 iou_rec = []
 eval_it = []
+# verbose
+print_every = 100
+vis_every = 1000
+plot_every = 5000
+eval_every = 0
 
 it = 0
-max_it = 2000
+max_it = 200000
 best_it = -1
 best_entropy = 1000
 while it <= max_it:
