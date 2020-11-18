@@ -134,7 +134,7 @@ it = 0
 print_every = 10
 vis_every = 1000
 plot_every = 1000
-eval_every = 10
+eval_every = 1
 # metrics records
 loss_rec = []
 entropy_rec = []
