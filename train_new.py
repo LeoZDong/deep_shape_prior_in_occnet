@@ -28,7 +28,6 @@ model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 #### Intialize training ####
 # shape_id = '7c13a71834d2b97687cc3b689b9b258d'
 shape_id = '24d07a3c5ff0840872152988eac576ab' if args.id is None else args.id
-import ipdb; ipdb.set_trace()
 # shape_id = '36190ce6fe041e452d647b1c17442c93'  # does not have model
 # shape_id = '49c2f144b928726572a38ac2b8f5cd48'
 # shape_id = '53737a4b45fc06963ffe0e5069bf1eb5'
