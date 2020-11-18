@@ -110,7 +110,7 @@ def plot_eval(entropy_rec, iou_rec):
            title='iou record starting at 0')
 
     fig_entropy.savefig(os.path.join(save_path, "eval_entropy.png"), dpi=1000)
-    fig_iou.savefig(os.path.join(save_path, "eval_iou.png"), dpi=1000)
+    plt.close()
 
 
 # Configure training loop
