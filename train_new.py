@@ -16,8 +16,9 @@ parser.add_argument('--no-cuda', action='store_true', help='Do not use cuda.')
 parser.add_argument('--exit-after', type=int, default=-1,
                     help='Checkpoint and exit after specified number of seconds'
                          'with exit code 2.')
+parser.add_argument('--id', type=str, default=None, help="ID of the shape to process.")
 
-# args = parser.parse_args()
+args = parser.parse_args()
 is_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if is_cuda else "cpu")
 
@@ -26,7 +27,8 @@ model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 
 #### Intialize training ####
 # shape_id = '7c13a71834d2b97687cc3b689b9b258d'
-shape_id = '24d07a3c5ff0840872152988eac576ab'
+shape_id = '24d07a3c5ff0840872152988eac576ab' if args.id is None else args.id
+import ipdb; ipdb.set_trace()
 # shape_id = '36190ce6fe041e452d647b1c17442c93'  # does not have model
 # shape_id = '49c2f144b928726572a38ac2b8f5cd48'
 # shape_id = '53737a4b45fc06963ffe0e5069bf1eb5'
@@ -168,7 +170,7 @@ while max_it is None or it <= max_it:
 
 print("Training loop finished. Plot final results...")
 plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), \
-"Training loss starting at iteration 500 (smoothed)", '0_loss.png', start_it=500, window=10)
+"Training loss starting at iteration 500 (smoothed)", '0_loss.png', start_it=500, window=500)
 if eval_every > 0:
     plot_metric(entropy_rec, eval_it, \
     "Validation cross entropy (smoothed)", '0_entropy.png', start_it=1, window=5)
