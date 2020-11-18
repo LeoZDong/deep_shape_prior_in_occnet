@@ -108,9 +108,9 @@ iou_rec = []
 eval_it = []
 # verbose
 print_every = 500
-vis_every = 0
+vis_every = 500
 plot_every = 10000
-eval_every = 500
+eval_every = 0
 assert(eval_every <= print_every)
 
 it = 0
@@ -167,11 +167,12 @@ while max_it is None or it <= max_it:
             "Validation IoU (smoothed)", '0_iou.png', start_it=1, window=5)
 
 
-print("Training loop finished. Plot final results...")
-plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), \
-"Training loss starting at iteration 500 (smoothed)", '0_loss.png', start_it=500, window=500)
-if eval_every > 0:
-    plot_metric(entropy_rec, eval_it, \
-    "Validation cross entropy (smoothed)", '0_entropy.png', start_it=1, window=5)
-    plot_metric(iou_rec, eval_it, \
-    "Validation IoU (smoothed)", '0_iou.png', start_it=1, window=5)
+if plot_every > 0:
+    print("Training loop finished. Plot final results...")
+    plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), \
+    "Training loss (smoothed)", '0_loss.png', start_it=1, window=500)
+    if eval_every > 0:
+        plot_metric(entropy_rec, eval_it, \
+        "Validation cross entropy (smoothed)", '0_entropy.png', start_it=1, window=5)
+        plot_metric(iou_rec, eval_it, \
+        "Validation IoU (smoothed)", '0_iou.png', start_it=1, window=5)
