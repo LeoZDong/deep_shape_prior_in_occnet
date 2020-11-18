@@ -124,7 +124,7 @@ while max_it is None or it <= max_it:
 
     # Evaluation step
     if eval_every > 0 and (it % eval_every) == 0:
-        eval_dict = trainer.eval_step(points, points_occ)
+        eval_dict = trainer.eval_step(points_eval, points_eval_occ)
         entropy_eval = eval_dict['cross_entropy']
         iou_eval = eval_dict['iou']
         entropy_rec.append(entropy_eval.item())
