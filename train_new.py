@@ -64,16 +64,16 @@ points_occ = torch.FloatTensor(points_dict['occ'])
 #### Visualize initial inputs ####
 from im2mesh.utils import visualize
 save_path = os.path.join('./visualize', shape_id)
-visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel_exact', save_path, mode='exact')
-visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel_mc', save_path, mode='marching_cubes')
+visualize.visualize_voxels_new(voxel_data.unsqueeze(0), '1_input_voxel_exact', save_path, mode='exact')
+visualize.visualize_voxels_new(voxel_data.unsqueeze(0), '1_input_voxel_mc', save_path, mode='marching_cubes')
 # points sampling function
 from im2mesh.onet.models.decoder_from_random_prior import generate_n_points
 bounds = (-0.55, 0.55, -0.55, 0.55, -0.55, 0.55)
 test_points, points_occ_gen = generate_n_points(voxel_data, 100000, bounds)
 test_points = test_points.cpu().numpy()[points_occ_gen > 0.5]
-visualize.visualize_pointcloud_new(test_points, 'input_points', save_path)
-visualize.visualize_pointcloud_new(pointcloud, 'surface_points', save_path)
-visualize.visualize_pointcloud_new(points[points_occ > 0.5].cpu().numpy(), 'eval_points', save_path)
+visualize.visualize_pointcloud_new(test_points, '2_input_points', save_path)
+visualize.visualize_pointcloud_new(pointcloud, '2_surface_points', save_path)
+visualize.visualize_pointcloud_new(points[points_occ > 0.5].cpu().numpy(), '2_eval_points', save_path)
 
 
 
@@ -121,7 +121,6 @@ plot_every = 100
 eval_every = 10
 # metrics records
 loss_rec = []
-train_it = []  # used when smoothing is performed
 entropy_rec = []
 iou_rec = []
 eval_it = []
@@ -154,6 +153,6 @@ while True:
     # Plot metrics
     if plot_every > 0 and (it == 1 or (it % plot_every) == 0):
         print("Plotting...")
-        plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), "Training loss starting at iteration 500", 'loss.png', start_it=500)
-        plot_metric(entropy_rec, eval_it, "Validation cross entropy", 'entropy.png', start_it=1)
-        plot_metric(iou_rec, eval_it, "Validation IoU", 'iou.png', start_it=1)
+        plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), "Training loss starting at iteration 500", '0_loss.png', start_it=500)
+        plot_metric(entropy_rec, eval_it, "Validation cross entropy", '0_entropy.png', start_it=1)
+        plot_metric(iou_rec, eval_it, "Validation IoU", '0_iou.png', start_it=1)
