@@ -170,8 +170,10 @@ while it <= max_it:
 
     # Print output
     if print_every > 0 and (it % print_every) == 0:
-        print('it=%03d loss=%.4f entropy_eval=%0.4f iou_eval=%0.4f)'
-              % (it, loss, eval_dict['cross_entropy'], eval_dict['iou']))
+        # print('it=%03d loss=%.4f entropy_eval=%0.4f iou_eval=%0.4f)'
+        #       % (it, loss, eval_dict['cross_entropy'], eval_dict['iou']))
+        print('it=%03d loss=%.4f' % (it, loss))
+
 
     # Visualize shape
     if vis_every > 0 and (it == max_it or (it % vis_every) == 0):
