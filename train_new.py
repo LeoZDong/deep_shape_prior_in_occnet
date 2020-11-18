@@ -110,6 +110,7 @@ print_every = 500
 vis_every = 0
 plot_every = 5000
 eval_every = 500
+assert(eval_every <= print_every)
 
 it = 0
 max_it = None
@@ -134,8 +135,9 @@ while max_it is None or it <= max_it:
             best_entropy = entropy_eval
             best_it = it
             print("Best eval reached at it: {}".format(it))
-            sub_dir = (it // 10000) * 10000
-            trainer.visualize_decoder(it, loss, sub_dir, best=True)
+            if vis_every > 0:
+                sub_dir = (it // 10000) * 10000
+                trainer.visualize_decoder(it, loss, sub_dir, best=True)
 
     # Print output
     if print_every > 0 and (it % print_every) == 0:
