@@ -139,7 +139,7 @@ while max_it is None or it <= max_it:
 
     # Print output
     if print_every > 0 and (it % print_every) == 0:
-        if eval_every > 0:
+        if eval_every > 0 and it > eval_every:
             print('it=%03d loss=%.4f entropy_eval=%0.4f iou_eval=%0.4f)'
                   % (it, loss, eval_dict['cross_entropy'], eval_dict['iou']))
         else:
