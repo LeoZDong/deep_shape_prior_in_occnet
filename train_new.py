@@ -26,11 +26,16 @@ device = torch.device("cuda" if is_cuda else "cpu")
 model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 
 #### Intialize training ####
+# Cars
 # shape_id = '7c13a71834d2b97687cc3b689b9b258d'
-shape_id = '24d07a3c5ff0840872152988eac576ab' if args.id is None else args.id
+# shape_id = '24d07a3c5ff0840872152988eac576ab' if args.id is None else args.id
 # shape_id = '36190ce6fe041e452d647b1c17442c93'  # does not have model
 # shape_id = '49c2f144b928726572a38ac2b8f5cd48'
 # shape_id = '53737a4b45fc06963ffe0e5069bf1eb5'
+
+# Planes
+shape_id = '1021a0914a7207aff927ed529ad90a11'
+
 vis_dir = os.path.join('./visualize', shape_id, 'iterations')
 os.system('rm -rf {}'.format(vis_dir))
 trainer = DecoderOnlyTrainer(model, device=device, vis_dir=vis_dir)
@@ -43,7 +48,9 @@ print('Total number of parameters: %d' % nparameters)
 
 #### Load data ####
 # Training data
-data_dir = './data/ShapeNet/02958343'
+cars = '02958343'
+planes = '02691156'
+data_dir = './data/ShapeNet/{}'.format(planes)
 voxel_field = VoxelsField("model.binvox")
 # TODO: figure out what the 0, 0 means; make this cleaner
 voxel_data = torch.FloatTensor(voxel_field.load(os.path.join(data_dir, shape_id), 0, 0))
@@ -110,7 +117,7 @@ eval_it = []
 print_every = 500
 vis_every = 500
 plot_every = 10000
-eval_every = 0
+eval_every = 500
 assert(eval_every <= print_every)
 
 it = 0
