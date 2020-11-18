@@ -67,10 +67,11 @@ visualize.visualize_voxels_new(voxel_data.unsqueeze(0), 'input_voxel_mc', save_p
 # points sampling function
 from im2mesh.onet.models.decoder_from_random_prior import generate_n_points
 bounds = (-0.55, 0.55, -0.55, 0.55, -0.55, 0.55)
-test_points, points_occ = generate_n_points(voxel_data, 100000, bounds)
-test_points = test_points.cpu().numpy()[points_occ > 0.5]
+test_points, points_occ_gen = generate_n_points(voxel_data, 100000, bounds)
+test_points = test_points.cpu().numpy()[points_occ_gen > 0.5]
 visualize.visualize_pointcloud_new(test_points, 'test', save_path)
 visualize.visualize_pointcloud_new(pointcloud, 'pointcloud', save_path)
+# visualize.visualize_pointcloud_new(pointcloud, 'points', save_path)
 
 
 
