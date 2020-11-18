@@ -85,7 +85,6 @@ def plot_metric(records, its, plot_title, filename, start_it=1):
         x = np.array(its)
         y = np.array(records)
         fig, ax = plt.subplots()
-        import ipdb; ipdb.set_trace()
         ax.plot(x[np.where(x >= start_it)], y[np.where(x >= start_it)])
         ax.set(xlabel='iteration', ylabel='loss',
                title=plot_title)
