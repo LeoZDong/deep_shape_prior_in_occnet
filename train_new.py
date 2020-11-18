@@ -107,12 +107,12 @@ iou_rec = []
 eval_it = []
 # verbose
 print_every = 100
-vis_every = 100
-plot_every = 500
-eval_every = 1
+vis_every = 1000
+plot_every = 5000
+eval_every = 10
 
 it = 0
-max_it = 2000
+max_it = 200000
 best_it = -1
 best_entropy = 1000
 while it <= max_it:
@@ -139,9 +139,11 @@ while it <= max_it:
 
     # Print output
     if print_every > 0 and (it % print_every) == 0:
-        # print('it=%03d loss=%.4f entropy_eval=%0.4f iou_eval=%0.4f)'
-        #       % (it, loss, eval_dict['cross_entropy'], eval_dict['iou']))
-        print('it=%03d loss=%.4f' % (it, loss))
+        if eval > 0:
+            print('it=%03d loss=%.4f entropy_eval=%0.4f iou_eval=%0.4f)'
+                  % (it, loss, eval_dict['cross_entropy'], eval_dict['iou']))
+        else:
+            print('it=%03d loss=%.4f' % (it, loss))
 
 
     # Visualize shape
