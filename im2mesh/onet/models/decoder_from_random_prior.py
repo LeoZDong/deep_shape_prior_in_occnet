@@ -115,7 +115,7 @@ class DecoderOnlyTrainer(BaseTrainer):
             return eval_dict
 
 
-    def visualize_decoder(self, it, loss, sub_dir=0):
+    def visualize_decoder(self, it, loss, sub_dir=0, best=False):
         ''' Performs a visualization step for the data.
 
         Args:
@@ -124,22 +124,14 @@ class DecoderOnlyTrainer(BaseTrainer):
         device = self.device
 
         shape = (128, 128, 128)
-        p = make_3d_grid([-0.5] * 3, [0.5] * 3, shape).to(device)
-        # p = p.expand(batch_size, *p.size())
+        p = make_3d_grid([-0.55] * 3, [0.55] * 3, shape).to(device)
 
         with torch.no_grad():
             p_r = self.model(p)
 
-        # import ipdb; ipdb.set_trace()
         occ_hat = self.probs(p_r).view(1, *shape)
         voxels_out = (occ_hat >= self.threshold).cpu()
-
-        # for i in trange(batch_size):
-            # input_img_path = os.path.join(self.vis_dir, '%03d_in.png' % i)
-            # vis.visualize_data(
-            #     inputs[i].cpu(), self.input_type, input_img_path)
-
-        # import ipdb; ipdb.set_trace()
         vis_dir = os.path.join(self.vis_dir, '{:06}'.format(sub_dir))
+
         vis.visualize_voxels_new(
-            voxels_out, 'it{:06d}_{:.3f}'.format(it, loss), vis_dir)
+            voxels_out, 'best' if best else 'it{:06d}_{:.3f}'.format(it, loss), vis_dir)

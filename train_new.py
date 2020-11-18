@@ -142,6 +142,8 @@ eval_it = []
 
 it = 0
 max_it = 2000
+best_it = -1
+best_entropy = 1000
 while it <= max_it:
     it += 1
     # Train step
@@ -156,6 +158,13 @@ while it <= max_it:
         entropy_rec.append(entropy_eval.item())
         iou_rec.append(iou_eval.item())
         eval_it.append(it)
+
+        if entropy_eval < best_entropy:
+            best_entropy = entropy_eval
+            best_it = it
+            print("Best eval reached at it: {}".format(it))
+            sub_dir = (it // 10000) * 10000
+            trainer.visualize_decoder(it, loss, sub_dir, best=True)
 
     # Print output
     if print_every > 0 and (it % print_every) == 0:
