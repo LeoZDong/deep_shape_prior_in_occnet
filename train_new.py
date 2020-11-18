@@ -25,8 +25,8 @@ device = torch.device("cuda" if is_cuda else "cpu")
 model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 
 #### Intialize training ####
-shape_id = '7c13a71834d2b97687cc3b689b9b258d'
-# shape_id = '24d07a3c5ff0840872152988eac576ab'
+# shape_id = '7c13a71834d2b97687cc3b689b9b258d'
+shape_id = '24d07a3c5ff0840872152988eac576ab'
 # shape_id = '36190ce6fe041e452d647b1c17442c93'  # does not have model
 # shape_id = '49c2f144b928726572a38ac2b8f5cd48'
 # shape_id = '53737a4b45fc06963ffe0e5069bf1eb5'
@@ -138,12 +138,12 @@ iou_rec = []
 eval_it = []
 # verbose
 print_every = 100
-vis_every = 1000
-plot_every = 5000
-eval_every = 0
+vis_every = 100
+plot_every = 500
+eval_every = 1
 
 it = 0
-max_it = 200000
+max_it = 2000
 best_it = -1
 best_entropy = 1000
 while it <= max_it:
@@ -186,7 +186,8 @@ while it <= max_it:
         print("Plotting...")
         plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), \
         "Training loss starting at iteration (smoothed)", '0_loss.png', start_it=1, window=10)
-        plot_metric(entropy_rec, eval_it, \
-        "Validation cross entropy (smoothed)", '0_entropy.png', start_it=1, window=10)
-        plot_metric(iou_rec, eval_it, \
-        "Validation IoU (smoothed)", '0_iou.png', start_it=1, window=10)
+        if eval_ever > 0:
+            plot_metric(entropy_rec, eval_it, \
+            "Validation cross entropy (smoothed)", '0_entropy.png', start_it=1, window=10)
+            plot_metric(iou_rec, eval_it, \
+            "Validation IoU (smoothed)", '0_iou.png', start_it=1, window=10)
