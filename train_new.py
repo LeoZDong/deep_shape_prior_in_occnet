@@ -140,7 +140,7 @@ loss_rec = []
 entropy_rec = []
 iou_rec = []
 eval_it = []
-while True:
+while it < 5000:
     it += 1
     # Train step
     loss = trainer.train_step(voxel_data, n_points=10000)
@@ -170,7 +170,7 @@ while True:
     if plot_every > 0 and (it == 1 or (it % plot_every) == 0):
         print("Plotting...")
         plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), \
-        "Training loss starting at iteration 500 (smoothed)", '0_loss.png', start_it=500, window=100)
+        "Training loss starting at iteration (smoothed)", '0_loss.png', start_it=1, window=10)
         plot_metric(entropy_rec, eval_it, \
         "Validation cross entropy (smoothed)", '0_entropy.png', start_it=1, window=10)
         plot_metric(iou_rec, eval_it, \
