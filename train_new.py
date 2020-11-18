@@ -84,7 +84,10 @@ def plot_metric(records, its, plot_title, filename, start_it=1):
     if len(its) > 0 and its[-1] > start_it:
         x = np.array(its)
         y = np.array(records)
-        y = pd.rolling_mean(y, window=10)
+        import ipdb; ipdb.set_trace()
+
+        y = pd.DataFrame(y, window=10).mean()
+        # y = pd.rolling_mean(y, window=10)
 
         fig, ax = plt.subplots()
         ax.plot(x[np.where(x >= start_it)], y[np.where(x >= start_it)])
