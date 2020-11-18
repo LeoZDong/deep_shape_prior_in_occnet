@@ -107,15 +107,15 @@ iou_rec = []
 eval_it = []
 # verbose
 print_every = 100
-vis_every = 1000
+vis_every = 0
 plot_every = 5000
-eval_every = 10
+eval_every = 500
 
 it = 0
-max_it = 200000
+max_it = None
 best_it = -1
 best_entropy = 1000
-while it <= max_it:
+while max_it is None or it <= max_it:
     it += 1
     # Train step
     loss = trainer.train_step(voxel_data, n_points=10000)
