@@ -82,10 +82,10 @@ def plot_metric(records, its, plot_title, filename, start_it=1):
     import matplotlib.pyplot as plt
 
     if len(its) > 0 and its[-1] > start_it:
-        x = its
-        y = records
+        x = np.array(its)
+        y = np.array(records)
         fig, ax = plt.subplots()
-        ax.plot(x[start:], y[start:])
+        ax.plot(x[np.where(x >= start_it)], y[np.where(x >= start_it)])
         ax.set(xlabel='iteration', ylabel='loss',
                title=plot_title)
 
