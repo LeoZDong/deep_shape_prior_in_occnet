@@ -130,17 +130,19 @@ def plot_smooth_eval(entropy_rec, iou_rec, window_size):
     fig_iou.savefig(os.path.join(save_path, "smootheval_iou.png"), dpi=1000)
 
 # Configure training loop
-it = 0
 print_every = 10
-vis_every = 1000
-plot_every = 1000
+vis_every = 100
+plot_every = 100
 eval_every = 1
 # metrics records
 loss_rec = []
 entropy_rec = []
 iou_rec = []
 eval_it = []
-while it < 5000:
+
+it = 0
+max_it = 500
+while it <= max_it:
     it += 1
     # Train step
     loss = trainer.train_step(voxel_data, n_points=10000)
@@ -161,13 +163,13 @@ while it < 5000:
               % (it, loss, eval_dict['cross_entropy'], eval_dict['iou']))
 
     # Visualize shape
-    if vis_every > 0 and (it == 1 or (it % vis_every) == 0):
+    if vis_every > 0 and (it == max_it or (it % vis_every) == 0):
         print('Visualizing...')
         sub_dir = (it // 10000) * 10000
         trainer.visualize_decoder(it, loss, sub_dir)
 
     # Plot metrics
-    if plot_every > 0 and (it == 1 or (it % plot_every) == 0):
+    if plot_every > 0 and (it == max_it or (it % plot_every) == 0):
         print("Plotting...")
         plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), \
         "Training loss starting at iteration (smoothed)", '0_loss.png', start_it=1, window=10)
