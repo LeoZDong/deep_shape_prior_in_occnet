@@ -104,7 +104,7 @@ class DecoderOnlyTrainer(BaseTrainer):
 
         # for cross entropy loss validation
         logits = self.model(points)
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         eval_dict['cross_entropy'] = F.binary_cross_entropy_with_logits(logits, points_occ, reduction='mean')
 
         # for iou validation
