@@ -96,7 +96,7 @@ def plot_metric(records, its, plot_title, filename, start_it=1):
 it = 0
 print_every = 10
 vis_every = 1000
-plot_every = 100
+plot_every = 1000
 eval_every = 10
 # metrics records
 loss_rec = []
