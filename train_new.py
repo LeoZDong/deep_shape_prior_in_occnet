@@ -77,16 +77,13 @@ visualize.visualize_pointcloud_new(points[points_occ > 0.5].cpu().numpy(), '2_ev
 
 
 
-def plot_metric(records, its, plot_title, filename, start_it=1):
+def plot_metric(records, its, plot_title, filename, start_it=1, window=10):
     import matplotlib.pyplot as plt
     import pandas as pd
 
     if len(its) > 0 and its[-1] > start_it:
         x = np.array(its)
-        y = np.array(records)
-
-        y = pd.DataFrame(y).rolling(window=10).mean().to_numpy()
-        # y = pd.rolling_mean(y, window=10)
+        y = pd.DataFrame(records).rolling(window).mean().to_numpy()
 
         fig, ax = plt.subplots()
         ax.plot(x[np.where(x >= start_it)], y[np.where(x >= start_it)])
@@ -172,6 +169,9 @@ while True:
     # Plot metrics
     if plot_every > 0 and (it == 1 or (it % plot_every) == 0):
         print("Plotting...")
-        plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), "Training loss starting at iteration 500", '0_loss.png', start_it=500)
-        plot_metric(entropy_rec, eval_it, "Validation cross entropy", '0_entropy.png', start_it=1)
-        plot_metric(iou_rec, eval_it, "Validation IoU", '0_iou.png', start_it=1)
+        plot_metric(loss_rec, np.arange(1, len(loss_rec) + 1, 1), \
+        "Training loss starting at iteration 500 (smoothed)", '0_loss.png', start_it=500, window=100)
+        plot_metric(entropy_rec, eval_it, \
+        "Validation cross entropy starting at iteration 100 (smoothed)", '0_entropy.png', start_it=100, window=100)
+        plot_metric(iou_rec, eval_it, \
+        "Validation IoU starting at iteration 100 (smoothed)", '0_iou.png', start_it=100, window=100)
