@@ -90,28 +90,7 @@ def plot_metric(records, its, plot_title, filename, start_it=1):
                title=plot_title)
 
         fig.savefig(os.path.join(save_path, filename), dpi=1000)
-
-def plot_eval(entropy_rec, iou_rec):
-    import matplotlib
-    import matplotlib.pyplot as plt
-
-    x = np.arange(1, len(entropy_rec) + 1, 1)
-    y1 = entropy_rec
-    y2 = iou_rec
-
-    fig_entropy, ax1 = plt.subplots()
-    fig_iou, ax2 = plt.subplots()
-
-    ax1.plot(x, y1)
-    ax2.plot(x, y2)
-    ax1.set(xlabel='iteration', ylabel='eval',
-           title='entropy record starting at 0')
-    ax2.set(xlabel='iteration', ylabel='eval',
-           title='iou record starting at 0')
-
-    fig_entropy.savefig(os.path.join(save_path, "eval_entropy.png"), dpi=1000)
-    plt.close('all')
-
+        plt.close()
 
 # Configure training loop
 it = 0
