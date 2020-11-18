@@ -49,16 +49,15 @@ voxel_data = torch.FloatTensor(voxel_field.load(os.path.join(data_dir, shape_id)
 print(voxel_data.shape)
 
 # Pointclouds are points sampled from the surface of the mesh
-# Used for visualization only
 pointcloud_field = PointCloudField('pointcloud.npz')
-pointcloud = pointcloud_field.load(os.path.join(data_dir, shape_id), 0, 0)[None]
+points_surface = pointcloud_field.load(os.path.join(data_dir, shape_id), 0, 0)[None]
+points_surface_occ = np.ones(points_surface.shape(0))
 
 # Points are points randomly sampled in space with an associated occupancy
-# Used for validation
 points_field = PointsField('points.npz', unpackbits=True)
 points_dict = points_field.load(os.path.join(data_dir, shape_id), 0, 0)
-points = torch.FloatTensor(points_dict[None])
-points_occ = torch.FloatTensor(points_dict['occ'])
+points_bounding = points_dict[None]
+points_bounding_occ = points_dict['occ']
 
 
 #### Visualize initial inputs ####
@@ -68,16 +67,17 @@ visualize.visualize_voxels_new(voxel_data.unsqueeze(0), '1_input_voxel_exact', s
 visualize.visualize_voxels_new(voxel_data.unsqueeze(0), '1_input_voxel_mc', save_path, mode='marching_cubes')
 # points sampling function
 from im2mesh.onet.models.decoder_from_random_prior import generate_n_points
-bounds = (-0.55, 0.55, -0.55, 0.55, -0.55, 0.55)
+bounds = (-0.5, 0.5, -0.5, 0.5, -0.5, 0.5)
 test_points, points_occ_gen = generate_n_points(voxel_data, 100000, bounds)
 test_points = test_points.cpu().numpy()[points_occ_gen > 0.5]
 visualize.visualize_pointcloud_new(test_points, '2_input_points', save_path)
-visualize.visualize_pointcloud_new(pointcloud, '2_surface_points', save_path)
-visualize.visualize_pointcloud_new(points[points_occ > 0.5].cpu().numpy(), '2_eval_points', save_path)
+visualize.visualize_pointcloud_new(points_surface, '2_surface_points', save_path)
+visualize.visualize_pointcloud_new(points_bounding[points_bounding_occ > 0.5], '2_eval_points', save_path)
 
-#### CHANGE EVAL POINTS ####
-points = torch.FloatTensor(pointcloud)
-points_occ = torch.ones(points.shape[0])
+#### Configure evaluation points ####
+points_eval = torch.cat((torch.FloatTensor(points_surface), torch.FloatTensor(points_bounding)), 0)
+points_eval_occ = torch.cat((torch.FloatTensor(points_surface_occ), torch.FloatTensor(points_bounding_occ)), 0)
+
 
 
 
