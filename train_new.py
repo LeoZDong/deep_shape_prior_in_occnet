@@ -75,6 +75,10 @@ visualize.visualize_pointcloud_new(test_points, '2_input_points', save_path)
 visualize.visualize_pointcloud_new(pointcloud, '2_surface_points', save_path)
 visualize.visualize_pointcloud_new(points[points_occ > 0.5].cpu().numpy(), '2_eval_points', save_path)
 
+#### CHANGE EVAL POINTS ####
+points = torch.FloatTensor(pointcloud)
+points_occ = torch.ones(points.shape[0])
+
 
 
 def plot_metric(records, its, plot_title, filename, start_it=1, window=10):
@@ -93,41 +97,6 @@ def plot_metric(records, its, plot_title, filename, start_it=1, window=10):
         fig.savefig(os.path.join(save_path, filename), dpi=1000)
         plt.close()
 
-
-def plot_smooth_eval(entropy_rec, iou_rec, window_size):
-    '''
-    Plots the moving average of 100 epochs for the two evaluation metrics
-    Assume that at least 100 iteration have been performed
-
-    Args:
-        entropy_rec: list of cross entropy loss calculations at each iteration
-        iou_rec: list of iou calculations at each iteration
-        window_size: number of iterations used for moving average
-    '''
-    import pandas as pd
-    import numpy as np
-
-    import ipdb; ipdb.set_trace()
-    # x = np.arange(1, len(entropy_rec) + 1, 1)
-    df_entropy = pd.DataFrame(entropy_rec)
-    df_iou = pd.DataFrame(iou_rec)
-
-    entropy_sma = df_entropy.rolling(window_size).mean()
-    iou_sma = df_iou.rolling(window_size).mean()
-
-    ax1 = entropy_sma.plot(title='Moving Average for Cross Entropy Loss')
-    ax1.set_xlabel("Iteration")
-    ax1.set_ylabel("Loss")
-    fig_entropy = ax1.get_figure()
-
-    ax2 = iou_sma.plot(title='Moving Average for IoU')
-    ax2.set_xlabel("Iteration")
-    ax2.set_ylabel("IoU")
-    fig_iou = ax2.get_figure()
-
-    save_path = "."
-    fig_entropy.savefig(os.path.join(save_path, "smootheval_entropy.png"), dpi=1000)
-    fig_iou.savefig(os.path.join(save_path, "smootheval_iou.png"), dpi=1000)
 
 
 # Configure training loop
