@@ -124,7 +124,7 @@ class DecoderOnlyTrainer(BaseTrainer):
         device = self.device
 
         shape = (128, 128, 128)
-        p = make_3d_grid([-0.55] * 3, [0.55] * 3, shape).to(device)
+        p = make_3d_grid([-0.5] * 3, [0.5] * 3, shape).to(device)
 
         with torch.no_grad():
             p_r = self.model(p)
