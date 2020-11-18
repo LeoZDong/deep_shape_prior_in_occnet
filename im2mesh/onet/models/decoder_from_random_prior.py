@@ -79,7 +79,7 @@ class DecoderOnlyTrainer(BaseTrainer):
             if n_points is None:
                 raise ValueError("Either n_points or points should be specified")
             # points, points_occ = generate_n_points(voxels, n_points, (-1, 1, -1, 1, -1, 1))
-            points, points_occ = generate_n_points(voxels, n_points, (-0.5, 0.5, -0.5, 0.5, -0.5, 0.5))
+            points, points_occ = generate_n_points(voxels, n_points, (-0.55, 0.55, -0.55, 0.55, -0.55, 0.55))
             points = points.to(self.device)
             points_occ = points_occ.float().to(self.device)
 
