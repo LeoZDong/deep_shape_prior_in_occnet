@@ -81,7 +81,7 @@ def plot_metric(records, its, plot_title, filename, start_it=1):
     import matplotlib
     import matplotlib.pyplot as plt
 
-    if its[-1] > start_it:
+    if len(its) > 0 and its[-1] > start_it:
         x = its
         y = records
         fig, ax = plt.subplots()
