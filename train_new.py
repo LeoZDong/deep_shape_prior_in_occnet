@@ -34,7 +34,8 @@ model = DecoderOnlyModule(decoder.Decoder(c_dim=0), device=device)
 # shape_id = '53737a4b45fc06963ffe0e5069bf1eb5'
 
 # Planes
-shape_id = '1021a0914a7207aff927ed529ad90a11'
+# shape_id = '1021a0914a7207aff927ed529ad90a11'
+shape_id = '10155655850468db78d106ce0a280f87'
 
 vis_dir = os.path.join('./visualize', shape_id, 'iterations')
 os.system('rm -rf {}'.format(vis_dir))
@@ -143,9 +144,9 @@ while max_it is None or it <= max_it:
             best_entropy = entropy_eval
             best_it = it
             print("Best eval reached at it: {}".format(it))
-            if vis_every > 0:
-                sub_dir = (it // 10000) * 10000
-                trainer.visualize_decoder(it, loss, sub_dir, best=True)
+            # if vis_every > 0:
+            #     sub_dir = (it // 10000) * 10000
+            #     trainer.visualize_decoder(it, loss, sub_dir, best=True)
 
     # Print output
     if print_every > 0 and (it % print_every) == 0:
