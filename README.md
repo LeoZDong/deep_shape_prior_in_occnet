@@ -1,6 +1,6 @@
 # Our work
 
-This repository is a fork of [the repository for the occupancy networks paper](https://github.com/autonomousvision/occupancy_networks). We built off of this code. The updated models are located in `im2mesh/onet/models`, and the new training pipeline is `train_new.py`. More generally, anything modified within the last month is our work. 
+This repository is a fork of [the repository for the occupancy networks paper](https://github.com/autonomousvision/occupancy_networks). We built off of this code. The updated models are located in `im2mesh/onet/models`, and the new training pipeline is `train_new.py`. More generally, any modifications made in the last month are our work.
 
 # Occupancy Networks
 ![Example 1](img/00.gif)
